@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Board {
 
     @Id
@@ -40,4 +41,11 @@ public class Board {
 
     @Column(name = "content",nullable = false)
     private String content;
+
+    public Board(Member member, String title, String content) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.view = 0;
+    }
 }
