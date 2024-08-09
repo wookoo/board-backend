@@ -8,8 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class CreateAccountRequest {
     private String memberId;
     private String password;
@@ -21,10 +22,9 @@ public class CreateAccountRequest {
 
     public Member toMember(){
 
-        this.password = BCrypt.hashpw(this.password,BCrypt.gensalt());
         return new Member(
                 memberId,
-                password,
+                BCrypt.hashpw(this.password,BCrypt.gensalt()),
                 name,
                 call,
                 gender,
