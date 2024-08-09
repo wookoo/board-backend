@@ -18,6 +18,21 @@ public class MemberService {
         //TODO : 예외처리 필요
     }
 
+    public Member findByMemberId(String memberId){
+
+        return memberRepository.findByMemberId(memberId).orElseThrow(
+                RuntimeException::new
+        );
+    }
+
+    public boolean existsByMemberId(String memberId){
+        return memberRepository.existsByMemberId(memberId);
+    }
+
+    public boolean notExistsByMemberId(String memberId){
+        return !existsByMemberId(memberId);
+    }
+
     public void save(Member member){
         memberRepository.save(member);
     }
