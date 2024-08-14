@@ -2,6 +2,8 @@ package com.example.board.domain.member.service;
 
 
 import com.example.board.domain.member.entity.Member;
+import com.example.board.global.exception.BaseException;
+import com.example.board.global.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,14 @@ public class MemberService {
 
     public Member findById(long id){
         return memberRepository.findById(id).orElseThrow(
-                RuntimeException::new
+                () -> BaseException.from(ErrorCode.MEMBER_NOT_FOUND)
         );
-        //TODO : 예외처리 필요
     }
 
     public Member findByMemberId(String memberId){
 
         return memberRepository.findByMemberId(memberId).orElseThrow(
-                RuntimeException::new
+                ()-> BaseException.from(ErrorCode.MEMBER_NOT_FOUND)
         );
     }
 
