@@ -5,8 +5,10 @@ import com.example.board.application.dto.request.CreateAccountRequest;
 import com.example.board.application.dto.response.CanUseMemberIdResponse;
 import com.example.board.domain.member.entity.Member;
 import com.example.board.domain.member.service.MemberService;
+import com.example.board.global.jwt.JwtProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class AccountFacade {
 
     private final MemberService memberService;
+    private final JwtProvider jwtProvider;
 
     public CanUseMemberIdResponse canUseMemberId(String memberId) {
         boolean status = memberService.notExistsByMemberId(memberId);
@@ -31,5 +34,17 @@ public class AccountFacade {
         Member member = createAccountRequest.toMember();
         memberService.save(member);
     }
+
+    public String loginAccount(String memberId, String password){
+        Member member = memberService.findByMemberId(memberId); // memberId 로 조회를 한다.
+        String databasePassword = member.getPassword();
+        if(!BCrypt.checkpw(password,databasePassword)){ //비밀번호가 일치 하지 않으면
+            throw new RuntimeException();
+        }
+        return  jwtProvider.createAccessToken(member.getId());
+
+    }
+
+
 
 }
