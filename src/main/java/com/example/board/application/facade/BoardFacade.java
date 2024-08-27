@@ -41,11 +41,16 @@ public class BoardFacade {
         LocalDateTime createdAt = board.getCreatedAt();
         Member member = board.getMember();
 
+        String nickname = member.getNickName();
+        long memberId = member.getId();
+
         return new BoardDetailResponse(
                 title,
                 content,
                 view,
-                createdAt
+                createdAt,
+                nickname,
+                memberId
         );
 
 
