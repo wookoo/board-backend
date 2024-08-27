@@ -34,26 +34,7 @@ public class BoardFacade {
         조회수 -> 게시물을 조회했을때 1 증가 시키고 보여줘야 함.
         작성일자
          */
-
-        String title = board.getTitle();
-        String content = board.getContent();
-        int view = board.getView();
-        LocalDateTime createdAt = board.getCreatedAt();
-        Member member = board.getMember();
-
-        String nickname = member.getNickName();
-        long memberId = member.getId();
-
-        return new BoardDetailResponse(
-                title,
-                content,
-                view,
-                createdAt,
-                nickname,
-                memberId
-        );
-
-
+        return BoardDetailResponse.from(board);
     }
 
 }
