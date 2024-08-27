@@ -26,6 +26,7 @@ public class BoardFacade {
 
     public BoardDetailResponse getBoard(long id) {
         Board board = boardService.findById(id);
+        boardService.increaseViewOnce(board);
         /*
         제목
         내용
@@ -36,7 +37,7 @@ public class BoardFacade {
 
         String title = board.getTitle();
         String content = board.getContent();
-        int view = board.getView() + 1;
+        int view = board.getView();
         LocalDateTime createdAt = board.getCreatedAt();
         Member member = board.getMember();
 

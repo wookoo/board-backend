@@ -37,6 +37,7 @@ public class Board {
     private LocalDateTime createdAt;
 
 
+    @Setter
     @ColumnDefault("0")
     @Column(name = "view",nullable = false)
     private int view;
