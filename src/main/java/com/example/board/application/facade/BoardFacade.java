@@ -1,6 +1,7 @@
 package com.example.board.application.facade;
 
 import com.example.board.application.dto.response.BoardDetailResponse;
+import com.example.board.application.dto.response.BoardListResponse;
 import com.example.board.domain.board.entity.Board;
 import com.example.board.domain.board.service.BoardService;
 import com.example.board.domain.member.entity.Member;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,4 +40,13 @@ public class BoardFacade {
         return BoardDetailResponse.from(board);
     }
 
+    public List<BoardListResponse> getAllBoard() {
+        List<Board> boardList = boardService.findAll();
+
+        List<BoardListResponse> boardListResponseList = new ArrayList<>();
+        for(Board board : boardList){
+            boardListResponseList.add(BoardListResponse.from(board));
+        }
+        return boardListResponseList;
+    }
 }
